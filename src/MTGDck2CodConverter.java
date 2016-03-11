@@ -35,6 +35,7 @@ public class MTGDck2CodConverter {
   
   private void init() {
     Deck deck = new Deck();
+    deck.setName("Converted");
     
     try (BufferedReader reader = new BufferedReader(new FileReader(new File(fileName)))) {
       Zone main = new Zone("main");
@@ -63,8 +64,6 @@ public class MTGDck2CodConverter {
       
       deck.setMain(main);
       deck.setSideBoard(sideBoard);
-      
-      System.out.println("Success!");
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -150,7 +149,7 @@ public class MTGDck2CodConverter {
       Transformer transformer = transformerFactory.newTransformer();
       
       DOMSource source = new DOMSource(doc);
-      StreamResult result = new StreamResult(new File(deck.getName().replaceAll(" ", "_") + ".cod"));
+      StreamResult result = new StreamResult(new File(deck.getName().replaceAll("[^A-Za-z0-9]", "") + ".cod"));
       
       transformer.transform(source, result);
       
